@@ -177,7 +177,7 @@ function RightSide() {
                     <h2>Objective</h2><br />
                     <span>
                         Python / C++ developer with extensive work experience in computer graphics production pipeline.
-                        Looking for opportunities to get more familiar with AI / machine learning as well as automation in manufacturing and aerospace.
+                        Looking for opportunities to get more familiar with AI / machine learning as well as automation in manufacturing.
                     </span>
                 </div>
             </div>
