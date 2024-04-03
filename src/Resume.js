@@ -28,7 +28,7 @@ function LeftSide() {
             marginTop: '10%',
             display: 'inline-block',
             width: '220px',
-            height: '250px',
+            height: '5px',
             borderRadius: '50%',
             overflow: 'hidden'
         }
@@ -37,7 +37,7 @@ function LeftSide() {
 
             <div class="photo-container" style={leftSideStyle}>
                 <div class="photo" style={stylePhoto}>
-                    <img src={profilePic} width="220" />
+                    {/* <img src={profilePic} width="220" /> */}
                 </div>
                 <h2>BAHADIR ARSLAN<br /><span> Python / C++ Developer</span></h2>
             </div>
