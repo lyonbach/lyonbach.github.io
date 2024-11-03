@@ -79,7 +79,7 @@ function LeftSide() {
                         <span>Dokuz Eylul University (Izmir/Turkey)</span>
                     </li>
                     <li class="uls">
-                        <span>Computer Graphics and Game Design (MA)</span><br></br>
+                        <span>Computer Graphics and Game Design (MSc)</span><br></br>
                         <span>Hacettepe University (Ankara/Turkey) and Hochschule der Medien
                             (Stuttgart/Germany)</span>
                     </li>
@@ -139,7 +139,7 @@ function LeftSide() {
     const style = {
         background: '#003147',
         color: 'white',
-        height: '100%',
+        height: '297mm',
     };
 
     return (
