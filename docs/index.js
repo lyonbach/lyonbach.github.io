@@ -31,6 +31,202 @@ if (ENVIRONMENT_IS_NODE) {
 
 // --pre-jses are emitted after the Module integration code, so that they can
 // refer to Module (if they choose; they can also define Module)
+// include: /tmp/tmp918iug0_.js
+
+  Module['expectedDataFileDownloads'] ??= 0;
+  Module['expectedDataFileDownloads']++;
+  (() => {
+    // Do not attempt to redownload the virtual filesystem data when in a pthread or a Wasm Worker context.
+    var isPthread = typeof ENVIRONMENT_IS_PTHREAD != 'undefined' && ENVIRONMENT_IS_PTHREAD;
+    var isWasmWorker = typeof ENVIRONMENT_IS_WASM_WORKER != 'undefined' && ENVIRONMENT_IS_WASM_WORKER;
+    if (isPthread || isWasmWorker) return;
+    var isNode = typeof process === 'object' && typeof process.versions === 'object' && typeof process.versions.node === 'string';
+    function loadPackage(metadata) {
+
+      var PACKAGE_PATH = '';
+      if (typeof window === 'object') {
+        PACKAGE_PATH = window['encodeURIComponent'](window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/');
+      } else if (typeof process === 'undefined' && typeof location !== 'undefined') {
+        // web worker
+        PACKAGE_PATH = encodeURIComponent(location.pathname.substring(0, location.pathname.lastIndexOf('/')) + '/');
+      }
+      var PACKAGE_NAME = 'index.data';
+      var REMOTE_PACKAGE_BASE = 'index.data';
+      var REMOTE_PACKAGE_NAME = Module['locateFile'] ? Module['locateFile'](REMOTE_PACKAGE_BASE, '') : REMOTE_PACKAGE_BASE;
+var REMOTE_PACKAGE_SIZE = metadata['remote_package_size'];
+
+      function fetchRemotePackage(packageName, packageSize, callback, errback) {
+        if (isNode) {
+          require('fs').readFile(packageName, (err, contents) => {
+            if (err) {
+              errback(err);
+            } else {
+              callback(contents.buffer);
+            }
+          });
+          return;
+        }
+        Module['dataFileDownloads'] ??= {};
+        fetch(packageName)
+          .catch((cause) => Promise.reject(new Error(`Network Error: ${packageName}`, {cause}))) // If fetch fails, rewrite the error to include the failing URL & the cause.
+          .then((response) => {
+            if (!response.ok) {
+              return Promise.reject(new Error(`${response.status}: ${response.url}`));
+            }
+
+            if (!response.body && response.arrayBuffer) { // If we're using the polyfill, readers won't be available...
+              return response.arrayBuffer().then(callback);
+            }
+
+            const reader = response.body.getReader();
+            const iterate = () => reader.read().then(handleChunk).catch((cause) => {
+              return Promise.reject(new Error(`Unexpected error while handling : ${response.url} ${cause}`, {cause}));
+            });
+
+            const chunks = [];
+            const headers = response.headers;
+            const total = Number(headers.get('Content-Length') ?? packageSize);
+            let loaded = 0;
+
+            const handleChunk = ({done, value}) => {
+              if (!done) {
+                chunks.push(value);
+                loaded += value.length;
+                Module['dataFileDownloads'][packageName] = {loaded, total};
+
+                let totalLoaded = 0;
+                let totalSize = 0;
+
+                for (const download of Object.values(Module['dataFileDownloads'])) {
+                  totalLoaded += download.loaded;
+                  totalSize += download.total;
+                }
+
+                Module['setStatus']?.(`Downloading data... (${totalLoaded}/${totalSize})`);
+                return iterate();
+              } else {
+                const packageData = new Uint8Array(chunks.map((c) => c.length).reduce((a, b) => a + b, 0));
+                let offset = 0;
+                for (const chunk of chunks) {
+                  packageData.set(chunk, offset);
+                  offset += chunk.length;
+                }
+                callback(packageData.buffer);
+              }
+            };
+
+            Module['setStatus']?.('Downloading data...');
+            return iterate();
+          });
+      };
+
+      function handleError(error) {
+        console.error('package error:', error);
+      };
+
+      var fetchedCallback = null;
+      var fetched = Module['getPreloadedPackage'] ? Module['getPreloadedPackage'](REMOTE_PACKAGE_NAME, REMOTE_PACKAGE_SIZE) : null;
+
+      if (!fetched) fetchRemotePackage(REMOTE_PACKAGE_NAME, REMOTE_PACKAGE_SIZE, (data) => {
+        if (fetchedCallback) {
+          fetchedCallback(data);
+          fetchedCallback = null;
+        } else {
+          fetched = data;
+        }
+      }, handleError);
+
+    function runWithFS(Module) {
+
+      function assert(check, msg) {
+        if (!check) throw msg + new Error().stack;
+      }
+Module['FS_createPath']("/", "assets", true, true);
+
+      /** @constructor */
+      function DataRequest(start, end, audio) {
+        this.start = start;
+        this.end = end;
+        this.audio = audio;
+      }
+      DataRequest.prototype = {
+        requests: {},
+        open: function(mode, name) {
+          this.name = name;
+          this.requests[name] = this;
+          Module['addRunDependency'](`fp ${this.name}`);
+        },
+        send: function() {},
+        onload: function() {
+          var byteArray = this.byteArray.subarray(this.start, this.end);
+          this.finish(byteArray);
+        },
+        finish: function(byteArray) {
+          var that = this;
+          // canOwn this data in the filesystem, it is a slide into the heap that will never change
+          Module['FS_createDataFile'](this.name, null, byteArray, true, true, true);
+          Module['removeRunDependency'](`fp ${that.name}`);
+          this.requests[this.name] = null;
+        }
+      };
+
+      var files = metadata['files'];
+      for (var i = 0; i < files.length; ++i) {
+        new DataRequest(files[i]['start'], files[i]['end'], files[i]['audio'] || 0).open('GET', files[i]['filename']);
+      }
+
+      function processPackageData(arrayBuffer) {
+        assert(arrayBuffer, 'Loading data file failed.');
+        assert(arrayBuffer.constructor.name === ArrayBuffer.name, 'bad input to processPackageData');
+        var byteArray = new Uint8Array(arrayBuffer);
+        var curr;
+        // Reuse the bytearray from the XHR as the source for file reads.
+          DataRequest.prototype.byteArray = byteArray;
+          var files = metadata['files'];
+          for (var i = 0; i < files.length; ++i) {
+            DataRequest.prototype.requests[files[i].filename].onload();
+          }          Module['removeRunDependency']('datafile_index.data');
+
+      };
+      Module['addRunDependency']('datafile_index.data');
+
+      Module['preloadResults'] ??= {};
+
+      Module['preloadResults'][PACKAGE_NAME] = {fromCache: false};
+      if (fetched) {
+        processPackageData(fetched);
+        fetched = null;
+      } else {
+        fetchedCallback = processPackageData;
+      }
+
+    }
+    if (Module['calledRun']) {
+      runWithFS(Module);
+    } else {
+      (Module['preRun'] ??= []).push(runWithFS); // FS is not initialized yet, wait for it
+    }
+
+    }
+    loadPackage({"files": [{"filename": "/assets/base.fs", "start": 0, "end": 478}, {"filename": "/assets/concrete.png", "start": 478, "end": 55862}, {"filename": "/assets/metal.png", "start": 55862, "end": 145490}, {"filename": "/assets/mr_angry_cube_high_res.obj", "start": 145490, "end": 1211749}, {"filename": "/assets/texel_checker.png", "start": 1211749, "end": 1304934}], "remote_package_size": 1304934});
+
+  })();
+
+// end include: /tmp/tmp918iug0_.js
+// include: /tmp/tmpqggm1ea_.js
+
+    // All the pre-js content up to here must remain later on, we need to run
+    // it.
+    if (Module['$ww'] || (typeof ENVIRONMENT_IS_PTHREAD != 'undefined' && ENVIRONMENT_IS_PTHREAD)) Module['preRun'] = [];
+    var necessaryPreJSTasks = Module['preRun'].slice();
+  // end include: /tmp/tmpqggm1ea_.js
+// include: /tmp/tmp21kxvmxs.js
+
+    if (!Module['preRun']) throw 'Module.preRun should exist because file support used it; did a pre-js delete it?';
+    necessaryPreJSTasks.forEach((task) => {
+      if (Module['preRun'].indexOf(task) < 0) throw 'All preRun tasks that exist before user pre-js code should remain after; did you replace Module or modify Module.preRun?';
+    });
+  // end include: /tmp/tmp21kxvmxs.js
 
 
 var arguments_ = [];
@@ -954,6 +1150,75 @@ async function createWasm() {
     };
   var ___assert_fail = (condition, filename, line, func) =>
       abort(`Assertion failed: ${UTF8ToString(condition)}, at: ` + [filename ? UTF8ToString(filename) : 'unknown filename', line, func ? UTF8ToString(func) : 'unknown function']);
+
+  class ExceptionInfo {
+      // excPtr - Thrown object pointer to wrap. Metadata pointer is calculated from it.
+      constructor(excPtr) {
+        this.excPtr = excPtr;
+        this.ptr = excPtr - 24;
+      }
+  
+      set_type(type) {
+        HEAPU32[(((this.ptr)+(4))>>2)] = type;
+      }
+  
+      get_type() {
+        return HEAPU32[(((this.ptr)+(4))>>2)];
+      }
+  
+      set_destructor(destructor) {
+        HEAPU32[(((this.ptr)+(8))>>2)] = destructor;
+      }
+  
+      get_destructor() {
+        return HEAPU32[(((this.ptr)+(8))>>2)];
+      }
+  
+      set_caught(caught) {
+        caught = caught ? 1 : 0;
+        HEAP8[(this.ptr)+(12)] = caught;
+      }
+  
+      get_caught() {
+        return HEAP8[(this.ptr)+(12)] != 0;
+      }
+  
+      set_rethrown(rethrown) {
+        rethrown = rethrown ? 1 : 0;
+        HEAP8[(this.ptr)+(13)] = rethrown;
+      }
+  
+      get_rethrown() {
+        return HEAP8[(this.ptr)+(13)] != 0;
+      }
+  
+      // Initialize native structure fields. Should be called once after allocated.
+      init(type, destructor) {
+        this.set_adjusted_ptr(0);
+        this.set_type(type);
+        this.set_destructor(destructor);
+      }
+  
+      set_adjusted_ptr(adjustedPtr) {
+        HEAPU32[(((this.ptr)+(16))>>2)] = adjustedPtr;
+      }
+  
+      get_adjusted_ptr() {
+        return HEAPU32[(((this.ptr)+(16))>>2)];
+      }
+    }
+  
+  var exceptionLast = 0;
+  
+  var uncaughtExceptionCount = 0;
+  var ___cxa_throw = (ptr, type, destructor) => {
+      var info = new ExceptionInfo(ptr);
+      // Initialize ExceptionInfo content after it was allocated in __cxa_allocate_exception.
+      info.init(type, destructor);
+      exceptionLast = ptr;
+      uncaughtExceptionCount++;
+      assert(false, 'Exception thrown, but exception catching is not enabled. Compile with -sNO_DISABLE_EXCEPTION_CATCHING or -sEXCEPTION_CATCHING_ALLOWED=[..] to catch.');
+    };
 
   var PATH = {
   isAbs:(path) => path.charAt(0) === '/',
@@ -3630,6 +3895,18 @@ async function createWasm() {
         return ret;
       },
   };
+  function ___syscall_chdir(path) {
+  try {
+  
+      path = SYSCALLS.getStr(path);
+      FS.chdir(path);
+      return 0;
+    } catch (e) {
+    if (typeof FS == 'undefined' || !(e.name === 'ErrnoError')) throw e;
+    return -e.errno;
+  }
+  }
+
   function ___syscall_faccessat(dirfd, path, amode, flags) {
   try {
   
@@ -7797,6 +8074,18 @@ async function createWasm() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
   
   
   
@@ -9167,8 +9456,6 @@ async function createWasm() {
 
   var _glfwDefaultWindowHints = () => GLFW.defaultWindowHints();
 
-  var _glfwDestroyWindow = (winid) => GLFW.destroyWindow(winid);
-
   var _glfwGetPrimaryMonitor = () => 1;
 
   var _glfwGetTime = () => GLFW.getTime() - GLFW.initialTime;
@@ -9814,7 +10101,6 @@ if (Module['wasmBinary']) wasmBinary = Module['wasmBinary'];
   'makePromise',
   'idsToPromises',
   'makePromiseCallback',
-  'ExceptionInfo',
   'findMatchingCatch',
   'Browser_asyncPrepareDataCounter',
   'isLeapYear',
@@ -9949,6 +10235,7 @@ missingLibrarySymbols.forEach(missingLibrarySymbol)
   'uncaughtExceptionCount',
   'exceptionLast',
   'exceptionCaught',
+  'ExceptionInfo',
   'Browser',
   'getPreloadedImageData__data',
   'wget',
@@ -10020,49 +10307,49 @@ function checkIncomingModuleAPI() {
   ignoredModuleProp('fetchSettings');
 }
 var ASM_CONSTS = {
-  93672: () => { if (document.fullscreenElement) return 1; },  
- 93718: () => { return Module.canvas.width; },  
- 93750: () => { return parseInt(Module.canvas.style.width); },  
- 93798: () => { document.exitFullscreen(); },  
- 93825: () => { setTimeout(function() { Module.requestFullscreen(false, false); }, 100); },  
- 93898: () => { if (document.fullscreenElement) return 1; },  
- 93944: () => { return Module.canvas.width; },  
- 93976: () => { return screen.width; },  
- 94001: () => { document.exitFullscreen(); },  
- 94028: () => { setTimeout(function() { Module.requestFullscreen(false, true); setTimeout(function() { canvas.style.width="unset"; }, 100); }, 100); },  
- 94161: () => { return window.innerWidth; },  
- 94187: () => { return window.innerHeight; },  
- 94214: () => { if (document.fullscreenElement) return 1; },  
- 94260: () => { return Module.canvas.width; },  
- 94292: () => { return parseInt(Module.canvas.style.width); },  
- 94340: () => { if (document.fullscreenElement) return 1; },  
- 94386: () => { return Module.canvas.width; },  
- 94418: () => { return screen.width; },  
- 94443: () => { return window.innerWidth; },  
- 94469: () => { return window.innerHeight; },  
- 94496: () => { if (document.fullscreenElement) return 1; },  
- 94542: () => { return Module.canvas.width; },  
- 94574: () => { return screen.width; },  
- 94599: () => { document.exitFullscreen(); },  
- 94626: () => { if (document.fullscreenElement) return 1; },  
- 94672: () => { return Module.canvas.width; },  
- 94704: () => { return parseInt(Module.canvas.style.width); },  
- 94752: () => { document.exitFullscreen(); },  
- 94779: ($0) => { Module.canvas.style.opacity = $0; },  
- 94817: () => { return screen.width; },  
- 94842: () => { return screen.height; },  
- 94868: () => { return window.screenX; },  
- 94895: () => { return window.screenY; },  
- 94922: () => { return window.devicePixelRatio; },  
- 94958: ($0) => { navigator.clipboard.writeText(UTF8ToString($0)); },  
- 95011: ($0) => { Module.canvas.style.cursor = UTF8ToString($0); },  
- 95062: () => { Module.canvas.style.cursor = 'none'; },  
- 95099: ($0, $1, $2, $3) => { try { navigator.getGamepads()[$0].vibrationActuator.playEffect('dual-rumble', { startDelay: 0, duration: $3, weakMagnitude: $1, strongMagnitude: $2 }); } catch (e) { try { navigator.getGamepads()[$0].hapticActuators[0].pulse($2, $3); } catch (e) { } } },  
- 95355: ($0) => { Module.canvas.style.cursor = UTF8ToString($0); },  
- 95406: () => { if (document.fullscreenElement) return 1; },  
- 95452: () => { return window.innerWidth; },  
- 95478: () => { return window.innerHeight; },  
- 95505: () => { if (document.pointerLockElement) return 1; }
+  108104: () => { if (document.fullscreenElement) return 1; },  
+ 108150: () => { return Module.canvas.width; },  
+ 108182: () => { return parseInt(Module.canvas.style.width); },  
+ 108230: () => { document.exitFullscreen(); },  
+ 108257: () => { setTimeout(function() { Module.requestFullscreen(false, false); }, 100); },  
+ 108330: () => { if (document.fullscreenElement) return 1; },  
+ 108376: () => { return Module.canvas.width; },  
+ 108408: () => { return screen.width; },  
+ 108433: () => { document.exitFullscreen(); },  
+ 108460: () => { setTimeout(function() { Module.requestFullscreen(false, true); setTimeout(function() { canvas.style.width="unset"; }, 100); }, 100); },  
+ 108593: () => { return window.innerWidth; },  
+ 108619: () => { return window.innerHeight; },  
+ 108646: () => { if (document.fullscreenElement) return 1; },  
+ 108692: () => { return Module.canvas.width; },  
+ 108724: () => { return parseInt(Module.canvas.style.width); },  
+ 108772: () => { if (document.fullscreenElement) return 1; },  
+ 108818: () => { return Module.canvas.width; },  
+ 108850: () => { return screen.width; },  
+ 108875: () => { return window.innerWidth; },  
+ 108901: () => { return window.innerHeight; },  
+ 108928: () => { if (document.fullscreenElement) return 1; },  
+ 108974: () => { return Module.canvas.width; },  
+ 109006: () => { return screen.width; },  
+ 109031: () => { document.exitFullscreen(); },  
+ 109058: () => { if (document.fullscreenElement) return 1; },  
+ 109104: () => { return Module.canvas.width; },  
+ 109136: () => { return parseInt(Module.canvas.style.width); },  
+ 109184: () => { document.exitFullscreen(); },  
+ 109211: ($0) => { Module.canvas.style.opacity = $0; },  
+ 109249: () => { return screen.width; },  
+ 109274: () => { return screen.height; },  
+ 109300: () => { return window.screenX; },  
+ 109327: () => { return window.screenY; },  
+ 109354: () => { return window.devicePixelRatio; },  
+ 109390: ($0) => { navigator.clipboard.writeText(UTF8ToString($0)); },  
+ 109443: ($0) => { Module.canvas.style.cursor = UTF8ToString($0); },  
+ 109494: () => { Module.canvas.style.cursor = 'none'; },  
+ 109531: ($0, $1, $2, $3) => { try { navigator.getGamepads()[$0].vibrationActuator.playEffect('dual-rumble', { startDelay: 0, duration: $3, weakMagnitude: $1, strongMagnitude: $2 }); } catch (e) { try { navigator.getGamepads()[$0].hapticActuators[0].pulse($2, $3); } catch (e) { } } },  
+ 109787: ($0) => { Module.canvas.style.cursor = UTF8ToString($0); },  
+ 109838: () => { if (document.fullscreenElement) return 1; },  
+ 109884: () => { return window.innerWidth; },  
+ 109910: () => { return window.innerHeight; },  
+ 109937: () => { if (document.pointerLockElement) return 1; }
 };
 function GetCanvasIdJs() { var canvasId = "#" + Module.canvas.id; var lengthBytes = lengthBytesUTF8(canvasId) + 1; var stringOnWasmHeap = _malloc(lengthBytes); stringToUTF8(canvasId, stringOnWasmHeap, lengthBytes); return stringOnWasmHeap; }
 var wasmImports = {
@@ -10070,6 +10357,10 @@ var wasmImports = {
   GetCanvasIdJs,
   /** @export */
   __assert_fail: ___assert_fail,
+  /** @export */
+  __cxa_throw: ___cxa_throw,
+  /** @export */
+  __syscall_chdir: ___syscall_chdir,
   /** @export */
   __syscall_faccessat: ___syscall_faccessat,
   /** @export */
@@ -10565,13 +10856,37 @@ var wasmImports = {
   /** @export */
   glTexParameteri: _glTexParameteri,
   /** @export */
+  glUniform1fv: _glUniform1fv,
+  /** @export */
   glUniform1i: _glUniform1i,
   /** @export */
+  glUniform1iv: _glUniform1iv,
+  /** @export */
+  glUniform2fv: _glUniform2fv,
+  /** @export */
+  glUniform2iv: _glUniform2iv,
+  /** @export */
+  glUniform3fv: _glUniform3fv,
+  /** @export */
+  glUniform3iv: _glUniform3iv,
+  /** @export */
   glUniform4f: _glUniform4f,
+  /** @export */
+  glUniform4fv: _glUniform4fv,
+  /** @export */
+  glUniform4iv: _glUniform4iv,
   /** @export */
   glUniformMatrix4fv: _glUniformMatrix4fv,
   /** @export */
   glUseProgram: _glUseProgram,
+  /** @export */
+  glVertexAttrib1fv: _glVertexAttrib1fv,
+  /** @export */
+  glVertexAttrib2fv: _glVertexAttrib2fv,
+  /** @export */
+  glVertexAttrib3fv: _glVertexAttrib3fv,
+  /** @export */
+  glVertexAttrib4fv: _glVertexAttrib4fv,
   /** @export */
   glVertexAttribPointer: _glVertexAttribPointer,
   /** @export */
@@ -10580,8 +10895,6 @@ var wasmImports = {
   glfwCreateWindow: _glfwCreateWindow,
   /** @export */
   glfwDefaultWindowHints: _glfwDefaultWindowHints,
-  /** @export */
-  glfwDestroyWindow: _glfwDestroyWindow,
   /** @export */
   glfwGetPrimaryMonitor: _glfwGetPrimaryMonitor,
   /** @export */
@@ -10640,30 +10953,31 @@ var _emscripten_stack_get_free = () => (_emscripten_stack_get_free = wasmExports
 var __emscripten_stack_restore = (a0) => (__emscripten_stack_restore = wasmExports['_emscripten_stack_restore'])(a0);
 var __emscripten_stack_alloc = (a0) => (__emscripten_stack_alloc = wasmExports['_emscripten_stack_alloc'])(a0);
 var _emscripten_stack_get_current = () => (_emscripten_stack_get_current = wasmExports['emscripten_stack_get_current'])();
+var dynCall_vi = Module['dynCall_vi'] = createExportWrapper('dynCall_vi', 2);
+var dynCall_vif = Module['dynCall_vif'] = createExportWrapper('dynCall_vif', 3);
 var dynCall_vii = Module['dynCall_vii'] = createExportWrapper('dynCall_vii', 3);
+var dynCall_ii = Module['dynCall_ii'] = createExportWrapper('dynCall_ii', 2);
+var dynCall_iii = Module['dynCall_iii'] = createExportWrapper('dynCall_iii', 3);
+var dynCall_v = Module['dynCall_v'] = createExportWrapper('dynCall_v', 1);
 var dynCall_viii = Module['dynCall_viii'] = createExportWrapper('dynCall_viii', 4);
 var dynCall_viff = Module['dynCall_viff'] = createExportWrapper('dynCall_viff', 4);
 var dynCall_viiiii = Module['dynCall_viiiii'] = createExportWrapper('dynCall_viiiii', 6);
 var dynCall_viiii = Module['dynCall_viiii'] = createExportWrapper('dynCall_viiii', 5);
 var dynCall_vidd = Module['dynCall_vidd'] = createExportWrapper('dynCall_vidd', 4);
-var dynCall_ii = Module['dynCall_ii'] = createExportWrapper('dynCall_ii', 2);
 var dynCall_iiii = Module['dynCall_iiii'] = createExportWrapper('dynCall_iiii', 4);
-var dynCall_vi = Module['dynCall_vi'] = createExportWrapper('dynCall_vi', 2);
+var dynCall_iiiiii = Module['dynCall_iiiiii'] = createExportWrapper('dynCall_iiiiii', 6);
+var dynCall_viiiiii = Module['dynCall_viiiiii'] = createExportWrapper('dynCall_viiiiii', 7);
 var dynCall_vffff = Module['dynCall_vffff'] = createExportWrapper('dynCall_vffff', 5);
 var dynCall_vf = Module['dynCall_vf'] = createExportWrapper('dynCall_vf', 2);
 var dynCall_viiiiiiii = Module['dynCall_viiiiiiii'] = createExportWrapper('dynCall_viiiiiiii', 9);
 var dynCall_viiiiiiiii = Module['dynCall_viiiiiiiii'] = createExportWrapper('dynCall_viiiiiiiii', 10);
 var dynCall_i = Module['dynCall_i'] = createExportWrapper('dynCall_i', 1);
 var dynCall_vff = Module['dynCall_vff'] = createExportWrapper('dynCall_vff', 3);
-var dynCall_v = Module['dynCall_v'] = createExportWrapper('dynCall_v', 1);
 var dynCall_viiiiiii = Module['dynCall_viiiiiii'] = createExportWrapper('dynCall_viiiiiii', 8);
-var dynCall_iii = Module['dynCall_iii'] = createExportWrapper('dynCall_iii', 3);
 var dynCall_vfi = Module['dynCall_vfi'] = createExportWrapper('dynCall_vfi', 3);
 var dynCall_viif = Module['dynCall_viif'] = createExportWrapper('dynCall_viif', 4);
-var dynCall_vif = Module['dynCall_vif'] = createExportWrapper('dynCall_vif', 3);
 var dynCall_vifff = Module['dynCall_vifff'] = createExportWrapper('dynCall_vifff', 5);
 var dynCall_viffff = Module['dynCall_viffff'] = createExportWrapper('dynCall_viffff', 6);
-var dynCall_viiiiii = Module['dynCall_viiiiii'] = createExportWrapper('dynCall_viiiiii', 7);
 var dynCall_vfff = Module['dynCall_vfff'] = createExportWrapper('dynCall_vfff', 4);
 var dynCall_jiji = Module['dynCall_jiji'] = createExportWrapper('dynCall_jiji', 4);
 var dynCall_iidiiii = Module['dynCall_iidiiii'] = createExportWrapper('dynCall_iidiiii', 7);
