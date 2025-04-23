@@ -1,6 +1,8 @@
 echo "[1]   -> Building for WEB -";
 echo "[1][1]-> Adjusting environment...";
 
+PROJECT_ROOT=/media/lyonbach/depot/Work/Projects/mr-angry-cube-raylib
+RAYLIB_PATH=/media/lyonbach/depot/Work/Learn/raylib-web/vendor/raylib/build_web/raylib;
 EMSCRIPTEN_PATH=/media/lyonbach/depot/Work/Learn/emsdk;
 source $EMSCRIPTEN_PATH/emsdk_env.sh;
 
@@ -21,18 +23,33 @@ CPP_FILES_ARG="";
 echo "[2][2]-> Found those files:"
 for cpp_file in $CPP_FILES;
 do
-    echo $cpp_file
+    echo $cpp_file;
     CPP_FILES_ARG="$CPP_FILES_ARG $cpp_file";
 done
 
+echo "[2][3]->Copying files..."
+mkdir -p $(pwd)/assets
+for folder in "models" "shaders" "textures";
+do
+    mkdir -p $(pwd)/assets/$folder
+    for file in $(ls $PROJECT_ROOT/$folder);
+    do 
+        echo Copying $file...;
+        cp $PROJECT_ROOT/$folder/$file $(pwd)/assets/$folder;
+    done
+done
+
+
+
 echo $CPP_FILES_ARG;
-echo "[2][3]-> Succesfully generated the arguments.";
+echo "[2][4]-> Succesfully generated the arguments.";
+
 
 em++ $CPP_FILES \
     -o index.html \
-    -I/media/lyonbach/depot/Work/Learn/raylib-web/vendor/raylib/build_web/raylib/include \
-    -I/media/lonbach/depot/Work/Projects/mr-angry-cube-raylib/src \
-    -L/media/lyonbach/depot/Work/Learn/raylib-web/vendor/raylib/build_web/raylib \
+    -I$RAYLIB_PATH/include \
+    -I$PROJECT_ROOT/src \
+    -L$RAYLIB_PATH \
     -lraylib \
     -s USE_GLFW=3 \
     -s ASYNCIFY \
@@ -40,17 +57,13 @@ em++ $CPP_FILES \
     -s ALLOW_MEMORY_GROWTH=1 \
     -s FORCE_FILESYSTEM=1 \
     -std=c++20 \
-    --preload-file assets
-
-    # -s USE_PTHREADS=1 \
-    # -s PTHREAD_POOL_SIZE=4 \
-    # --preload-file /media/lyonbach/depot/Work/Projects/mr-angry-cube-raylib/build_web/assets/mr_angry_cube_high_res.obj \
-    # --preload-file /media/lyonbach/depot/Work/Projects/mr-angry-cube-raylib/build_web/assets/concrete.png \
-    # --preload-file /media/lyonbach/depot/Work/Projects/mr-angry-cube-raylib/build_web/assets/base.fs \
+    --preload-file assets/models \
+    --preload-file assets/shaders \
+    --preload-file assets/textures
 
 if [ $? -eq 0 ]; then
-    echo "[2][4]-> Build was succesful!";
+    echo "[2][5]-> Build was succesful!";
 else
-    echo "[2][4]-> Build failed!";
+    echo "[2][5]-> Build failed!";
     exit;
 fi
