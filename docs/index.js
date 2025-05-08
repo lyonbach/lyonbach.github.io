@@ -31,7 +31,7 @@ if (ENVIRONMENT_IS_NODE) {
 
 // --pre-jses are emitted after the Module integration code, so that they can
 // refer to Module (if they choose; they can also define Module)
-// include: /tmp/tmpgzg7ff2y.js
+// include: /tmp/tmpj340adah.js
 
   Module['expectedDataFileDownloads'] ??= 0;
   Module['expectedDataFileDownloads']++;
@@ -212,25 +212,25 @@ Module['FS_createPath']("/assets", "textures", true, true);
     }
 
     }
-    loadPackage({"files": [{"filename": "/assets/levels/Level-0.lvl", "start": 0, "end": 0}, {"filename": "/assets/levels/Level-1.lvl", "start": 0, "end": 1048}, {"filename": "/assets/levels/Level-2.lvl", "start": 1048, "end": 1666}, {"filename": "/assets/levels/level-0.lvl", "start": 1666, "end": 1666}, {"filename": "/assets/models/column.obj", "start": 1666, "end": 20657}, {"filename": "/assets/models/enemy.obj", "start": 20657, "end": 83664}, {"filename": "/assets/models/groundTile.obj", "start": 83664, "end": 83971}, {"filename": "/assets/models/mr_angry_cube.obj", "start": 83971, "end": 85325}, {"filename": "/assets/models/mr_angry_cube_high_res.obj", "start": 85325, "end": 1216101}, {"filename": "/assets/shaders/base.fs", "start": 1216101, "end": 1216579}, {"filename": "/assets/shaders/base.vs", "start": 1216579, "end": 1217142}, {"filename": "/assets/shaders/custom.fs", "start": 1217142, "end": 1217918}, {"filename": "/assets/shaders/custom.vs", "start": 1217918, "end": 1218291}, {"filename": "/assets/shaders/lighting.fs", "start": 1218291, "end": 1220244}, {"filename": "/assets/shaders/lighting.vs", "start": 1220244, "end": 1220993}, {"filename": "/assets/shaders/raymarching.fs", "start": 1220993, "end": 1233919}, {"filename": "/assets/textures/MrCube-GDD.jpg", "start": 1233919, "end": 1284004}, {"filename": "/assets/textures/concrete.png", "start": 1284004, "end": 3528738}, {"filename": "/assets/textures/menu.png", "start": 3528738, "end": 8697635}, {"filename": "/assets/textures/metal.png", "start": 8697635, "end": 8787263}, {"filename": "/assets/textures/mr-angry-cube-artwork-level-select.png", "start": 8787263, "end": 12782715}, {"filename": "/assets/textures/mr-angry-cube-artwork.png", "start": 12782715, "end": 16914179}, {"filename": "/assets/textures/test.png", "start": 16914179, "end": 17188776}, {"filename": "/assets/textures/texel_checker.png", "start": 17188776, "end": 17281961}, {"filename": "/assets/textures/texel_checker_crayon.png", "start": 17281961, "end": 19986648}, {"filename": "/game.ini", "start": 19986648, "end": 19986982}], "remote_package_size": 19986982});
+    loadPackage({"files": [{"filename": "/assets/levels/Level-0.lvl", "start": 0, "end": 0}, {"filename": "/assets/levels/Level-1.lvl", "start": 0, "end": 1048}, {"filename": "/assets/levels/Level-2.lvl", "start": 1048, "end": 1666}, {"filename": "/assets/models/column.obj", "start": 1666, "end": 20657}, {"filename": "/assets/models/enemy.obj", "start": 20657, "end": 83664}, {"filename": "/assets/models/groundTile.obj", "start": 83664, "end": 83971}, {"filename": "/assets/models/mr_angry_cube.obj", "start": 83971, "end": 85325}, {"filename": "/assets/models/mr_angry_cube_high_res.obj", "start": 85325, "end": 1216101}, {"filename": "/assets/shaders/base.fs", "start": 1216101, "end": 1216579}, {"filename": "/assets/shaders/base.vs", "start": 1216579, "end": 1217142}, {"filename": "/assets/shaders/custom.fs", "start": 1217142, "end": 1217918}, {"filename": "/assets/shaders/custom.vs", "start": 1217918, "end": 1218291}, {"filename": "/assets/shaders/lighting.fs", "start": 1218291, "end": 1220244}, {"filename": "/assets/shaders/lighting.vs", "start": 1220244, "end": 1220993}, {"filename": "/assets/shaders/raymarching.fs", "start": 1220993, "end": 1233919}, {"filename": "/assets/textures/MrCube-GDD.jpg", "start": 1233919, "end": 1284004}, {"filename": "/assets/textures/concrete.png", "start": 1284004, "end": 3528738}, {"filename": "/assets/textures/menu.png", "start": 3528738, "end": 8697635}, {"filename": "/assets/textures/metal.png", "start": 8697635, "end": 8787263}, {"filename": "/assets/textures/mr-angry-cube-artwork-level-select.png", "start": 8787263, "end": 12782715}, {"filename": "/assets/textures/mr-angry-cube-artwork.png", "start": 12782715, "end": 16914179}, {"filename": "/assets/textures/test.png", "start": 16914179, "end": 17188776}, {"filename": "/assets/textures/texel_checker.png", "start": 17188776, "end": 17281961}, {"filename": "/assets/textures/texel_checker_crayon.png", "start": 17281961, "end": 19986648}, {"filename": "/game.ini", "start": 19986648, "end": 19986982}], "remote_package_size": 19986982});
 
   })();
 
-// end include: /tmp/tmpgzg7ff2y.js
-// include: /tmp/tmpn37eb8e6.js
+// end include: /tmp/tmpj340adah.js
+// include: /tmp/tmpctozcgsl.js
 
     // All the pre-js content up to here must remain later on, we need to run
     // it.
     if (Module['$ww'] || (typeof ENVIRONMENT_IS_PTHREAD != 'undefined' && ENVIRONMENT_IS_PTHREAD)) Module['preRun'] = [];
     var necessaryPreJSTasks = Module['preRun'].slice();
-  // end include: /tmp/tmpn37eb8e6.js
-// include: /tmp/tmpa11bpg8x.js
+  // end include: /tmp/tmpctozcgsl.js
+// include: /tmp/tmpzwx70gbz.js
 
     if (!Module['preRun']) throw 'Module.preRun should exist because file support used it; did a pre-js delete it?';
     necessaryPreJSTasks.forEach((task) => {
       if (Module['preRun'].indexOf(task) < 0) throw 'All preRun tasks that exist before user pre-js code should remain after; did you replace Module or modify Module.preRun?';
     });
-  // end include: /tmp/tmpa11bpg8x.js
+  // end include: /tmp/tmpzwx70gbz.js
 
 
 var arguments_ = [];
