@@ -31,7 +31,7 @@ if (ENVIRONMENT_IS_NODE) {
 
 // --pre-jses are emitted after the Module integration code, so that they can
 // refer to Module (if they choose; they can also define Module)
-// include: /tmp/tmp1jfixpve.js
+// include: /tmp/tmpgzg7ff2y.js
 
   Module['expectedDataFileDownloads'] ??= 0;
   Module['expectedDataFileDownloads']++;
@@ -212,25 +212,25 @@ Module['FS_createPath']("/assets", "textures", true, true);
     }
 
     }
-    loadPackage({"files": [{"filename": "/assets/levels/Level-0.lvl", "start": 0, "end": 0}, {"filename": "/assets/levels/Level-1.lvl", "start": 0, "end": 1048}, {"filename": "/assets/levels/Level-2.lvl", "start": 1048, "end": 1227}, {"filename": "/assets/levels/level-0.lvl", "start": 1227, "end": 1227}, {"filename": "/assets/models/column.obj", "start": 1227, "end": 20218}, {"filename": "/assets/models/enemy.obj", "start": 20218, "end": 83225}, {"filename": "/assets/models/groundTile.obj", "start": 83225, "end": 83532}, {"filename": "/assets/models/mr_angry_cube.obj", "start": 83532, "end": 84886}, {"filename": "/assets/models/mr_angry_cube_high_res.obj", "start": 84886, "end": 1215662}, {"filename": "/assets/shaders/base.fs", "start": 1215662, "end": 1216140}, {"filename": "/assets/shaders/base.vs", "start": 1216140, "end": 1216703}, {"filename": "/assets/shaders/custom.fs", "start": 1216703, "end": 1217479}, {"filename": "/assets/shaders/custom.vs", "start": 1217479, "end": 1217852}, {"filename": "/assets/shaders/lighting.fs", "start": 1217852, "end": 1219805}, {"filename": "/assets/shaders/lighting.vs", "start": 1219805, "end": 1220554}, {"filename": "/assets/shaders/raymarching.fs", "start": 1220554, "end": 1233480}, {"filename": "/assets/textures/MrCube-GDD.jpg", "start": 1233480, "end": 1283565}, {"filename": "/assets/textures/concrete.png", "start": 1283565, "end": 3528299}, {"filename": "/assets/textures/menu.png", "start": 3528299, "end": 8697196}, {"filename": "/assets/textures/metal.png", "start": 8697196, "end": 8786824}, {"filename": "/assets/textures/mr-angry-cube-artwork.png", "start": 8786824, "end": 12918288}, {"filename": "/assets/textures/test.png", "start": 12918288, "end": 13192885}, {"filename": "/assets/textures/texel_checker.png", "start": 13192885, "end": 13286070}, {"filename": "/assets/textures/texel_checker_crayon.png", "start": 13286070, "end": 15990757}, {"filename": "/game.ini", "start": 15990757, "end": 15991091}], "remote_package_size": 15991091});
+    loadPackage({"files": [{"filename": "/assets/levels/Level-0.lvl", "start": 0, "end": 0}, {"filename": "/assets/levels/Level-1.lvl", "start": 0, "end": 1048}, {"filename": "/assets/levels/Level-2.lvl", "start": 1048, "end": 1666}, {"filename": "/assets/levels/level-0.lvl", "start": 1666, "end": 1666}, {"filename": "/assets/models/column.obj", "start": 1666, "end": 20657}, {"filename": "/assets/models/enemy.obj", "start": 20657, "end": 83664}, {"filename": "/assets/models/groundTile.obj", "start": 83664, "end": 83971}, {"filename": "/assets/models/mr_angry_cube.obj", "start": 83971, "end": 85325}, {"filename": "/assets/models/mr_angry_cube_high_res.obj", "start": 85325, "end": 1216101}, {"filename": "/assets/shaders/base.fs", "start": 1216101, "end": 1216579}, {"filename": "/assets/shaders/base.vs", "start": 1216579, "end": 1217142}, {"filename": "/assets/shaders/custom.fs", "start": 1217142, "end": 1217918}, {"filename": "/assets/shaders/custom.vs", "start": 1217918, "end": 1218291}, {"filename": "/assets/shaders/lighting.fs", "start": 1218291, "end": 1220244}, {"filename": "/assets/shaders/lighting.vs", "start": 1220244, "end": 1220993}, {"filename": "/assets/shaders/raymarching.fs", "start": 1220993, "end": 1233919}, {"filename": "/assets/textures/MrCube-GDD.jpg", "start": 1233919, "end": 1284004}, {"filename": "/assets/textures/concrete.png", "start": 1284004, "end": 3528738}, {"filename": "/assets/textures/menu.png", "start": 3528738, "end": 8697635}, {"filename": "/assets/textures/metal.png", "start": 8697635, "end": 8787263}, {"filename": "/assets/textures/mr-angry-cube-artwork-level-select.png", "start": 8787263, "end": 12782715}, {"filename": "/assets/textures/mr-angry-cube-artwork.png", "start": 12782715, "end": 16914179}, {"filename": "/assets/textures/test.png", "start": 16914179, "end": 17188776}, {"filename": "/assets/textures/texel_checker.png", "start": 17188776, "end": 17281961}, {"filename": "/assets/textures/texel_checker_crayon.png", "start": 17281961, "end": 19986648}, {"filename": "/game.ini", "start": 19986648, "end": 19986982}], "remote_package_size": 19986982});
 
   })();
 
-// end include: /tmp/tmp1jfixpve.js
-// include: /tmp/tmpkhllbosz.js
+// end include: /tmp/tmpgzg7ff2y.js
+// include: /tmp/tmpn37eb8e6.js
 
     // All the pre-js content up to here must remain later on, we need to run
     // it.
     if (Module['$ww'] || (typeof ENVIRONMENT_IS_PTHREAD != 'undefined' && ENVIRONMENT_IS_PTHREAD)) Module['preRun'] = [];
     var necessaryPreJSTasks = Module['preRun'].slice();
-  // end include: /tmp/tmpkhllbosz.js
-// include: /tmp/tmpvdbw2fah.js
+  // end include: /tmp/tmpn37eb8e6.js
+// include: /tmp/tmpa11bpg8x.js
 
     if (!Module['preRun']) throw 'Module.preRun should exist because file support used it; did a pre-js delete it?';
     necessaryPreJSTasks.forEach((task) => {
       if (Module['preRun'].indexOf(task) < 0) throw 'All preRun tasks that exist before user pre-js code should remain after; did you replace Module or modify Module.preRun?';
     });
-  // end include: /tmp/tmpvdbw2fah.js
+  // end include: /tmp/tmpa11bpg8x.js
 
 
 var arguments_ = [];
@@ -10531,49 +10531,49 @@ function checkIncomingModuleAPI() {
   ignoredModuleProp('fetchSettings');
 }
 var ASM_CONSTS = {
-  137880: () => { if (document.fullscreenElement) return 1; },  
- 137926: () => { return Module.canvas.width; },  
- 137958: () => { return parseInt(Module.canvas.style.width); },  
- 138006: () => { document.exitFullscreen(); },  
- 138033: () => { setTimeout(function() { Module.requestFullscreen(false, false); }, 100); },  
- 138106: () => { if (document.fullscreenElement) return 1; },  
- 138152: () => { return Module.canvas.width; },  
- 138184: () => { return screen.width; },  
- 138209: () => { document.exitFullscreen(); },  
- 138236: () => { setTimeout(function() { Module.requestFullscreen(false, true); setTimeout(function() { canvas.style.width="unset"; }, 100); }, 100); },  
- 138369: () => { return window.innerWidth; },  
- 138395: () => { return window.innerHeight; },  
- 138422: () => { if (document.fullscreenElement) return 1; },  
- 138468: () => { return Module.canvas.width; },  
- 138500: () => { return parseInt(Module.canvas.style.width); },  
- 138548: () => { if (document.fullscreenElement) return 1; },  
- 138594: () => { return Module.canvas.width; },  
- 138626: () => { return screen.width; },  
- 138651: () => { return window.innerWidth; },  
- 138677: () => { return window.innerHeight; },  
- 138704: () => { if (document.fullscreenElement) return 1; },  
- 138750: () => { return Module.canvas.width; },  
- 138782: () => { return screen.width; },  
- 138807: () => { document.exitFullscreen(); },  
- 138834: () => { if (document.fullscreenElement) return 1; },  
- 138880: () => { return Module.canvas.width; },  
- 138912: () => { return parseInt(Module.canvas.style.width); },  
- 138960: () => { document.exitFullscreen(); },  
- 138987: ($0) => { Module.canvas.style.opacity = $0; },  
- 139025: () => { return screen.width; },  
- 139050: () => { return screen.height; },  
- 139076: () => { return window.screenX; },  
- 139103: () => { return window.screenY; },  
- 139130: () => { return window.devicePixelRatio; },  
- 139166: ($0) => { navigator.clipboard.writeText(UTF8ToString($0)); },  
- 139219: ($0) => { Module.canvas.style.cursor = UTF8ToString($0); },  
- 139270: () => { Module.canvas.style.cursor = 'none'; },  
- 139307: ($0, $1, $2, $3) => { try { navigator.getGamepads()[$0].vibrationActuator.playEffect('dual-rumble', { startDelay: 0, duration: $3, weakMagnitude: $1, strongMagnitude: $2 }); } catch (e) { try { navigator.getGamepads()[$0].hapticActuators[0].pulse($2, $3); } catch (e) { } } },  
- 139563: ($0) => { Module.canvas.style.cursor = UTF8ToString($0); },  
- 139614: () => { if (document.fullscreenElement) return 1; },  
- 139660: () => { return window.innerWidth; },  
- 139686: () => { return window.innerHeight; },  
- 139713: () => { if (document.pointerLockElement) return 1; }
+  137912: () => { if (document.fullscreenElement) return 1; },  
+ 137958: () => { return Module.canvas.width; },  
+ 137990: () => { return parseInt(Module.canvas.style.width); },  
+ 138038: () => { document.exitFullscreen(); },  
+ 138065: () => { setTimeout(function() { Module.requestFullscreen(false, false); }, 100); },  
+ 138138: () => { if (document.fullscreenElement) return 1; },  
+ 138184: () => { return Module.canvas.width; },  
+ 138216: () => { return screen.width; },  
+ 138241: () => { document.exitFullscreen(); },  
+ 138268: () => { setTimeout(function() { Module.requestFullscreen(false, true); setTimeout(function() { canvas.style.width="unset"; }, 100); }, 100); },  
+ 138401: () => { return window.innerWidth; },  
+ 138427: () => { return window.innerHeight; },  
+ 138454: () => { if (document.fullscreenElement) return 1; },  
+ 138500: () => { return Module.canvas.width; },  
+ 138532: () => { return parseInt(Module.canvas.style.width); },  
+ 138580: () => { if (document.fullscreenElement) return 1; },  
+ 138626: () => { return Module.canvas.width; },  
+ 138658: () => { return screen.width; },  
+ 138683: () => { return window.innerWidth; },  
+ 138709: () => { return window.innerHeight; },  
+ 138736: () => { if (document.fullscreenElement) return 1; },  
+ 138782: () => { return Module.canvas.width; },  
+ 138814: () => { return screen.width; },  
+ 138839: () => { document.exitFullscreen(); },  
+ 138866: () => { if (document.fullscreenElement) return 1; },  
+ 138912: () => { return Module.canvas.width; },  
+ 138944: () => { return parseInt(Module.canvas.style.width); },  
+ 138992: () => { document.exitFullscreen(); },  
+ 139019: ($0) => { Module.canvas.style.opacity = $0; },  
+ 139057: () => { return screen.width; },  
+ 139082: () => { return screen.height; },  
+ 139108: () => { return window.screenX; },  
+ 139135: () => { return window.screenY; },  
+ 139162: () => { return window.devicePixelRatio; },  
+ 139198: ($0) => { navigator.clipboard.writeText(UTF8ToString($0)); },  
+ 139251: ($0) => { Module.canvas.style.cursor = UTF8ToString($0); },  
+ 139302: () => { Module.canvas.style.cursor = 'none'; },  
+ 139339: ($0, $1, $2, $3) => { try { navigator.getGamepads()[$0].vibrationActuator.playEffect('dual-rumble', { startDelay: 0, duration: $3, weakMagnitude: $1, strongMagnitude: $2 }); } catch (e) { try { navigator.getGamepads()[$0].hapticActuators[0].pulse($2, $3); } catch (e) { } } },  
+ 139595: ($0) => { Module.canvas.style.cursor = UTF8ToString($0); },  
+ 139646: () => { if (document.fullscreenElement) return 1; },  
+ 139692: () => { return window.innerWidth; },  
+ 139718: () => { return window.innerHeight; },  
+ 139745: () => { if (document.pointerLockElement) return 1; }
 };
 function GetCanvasIdJs() { var canvasId = "#" + Module.canvas.id; var lengthBytes = lengthBytesUTF8(canvasId) + 1; var stringOnWasmHeap = _malloc(lengthBytes); stringToUTF8(canvasId, stringOnWasmHeap, lengthBytes); return stringOnWasmHeap; }
 var wasmImports = {
