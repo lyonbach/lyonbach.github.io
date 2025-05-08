@@ -31,7 +31,7 @@ if (ENVIRONMENT_IS_NODE) {
 
 // --pre-jses are emitted after the Module integration code, so that they can
 // refer to Module (if they choose; they can also define Module)
-// include: /tmp/tmpu9pfxzjq.js
+// include: /tmp/tmp1jfixpve.js
 
   Module['expectedDataFileDownloads'] ??= 0;
   Module['expectedDataFileDownloads']++;
@@ -142,6 +142,7 @@ var REMOTE_PACKAGE_SIZE = metadata['remote_package_size'];
         if (!check) throw msg + new Error().stack;
       }
 Module['FS_createPath']("/", "assets", true, true);
+Module['FS_createPath']("/assets", "levels", true, true);
 Module['FS_createPath']("/assets", "models", true, true);
 Module['FS_createPath']("/assets", "shaders", true, true);
 Module['FS_createPath']("/assets", "textures", true, true);
@@ -211,25 +212,25 @@ Module['FS_createPath']("/assets", "textures", true, true);
     }
 
     }
-    loadPackage({"files": [{"filename": "/assets/models/enemy.obj", "start": 0, "end": 63007}, {"filename": "/assets/models/mr_angry_cube.obj", "start": 63007, "end": 64361}, {"filename": "/assets/models/mr_angry_cube_high_res.obj", "start": 64361, "end": 1130620}, {"filename": "/assets/shaders/base.fs", "start": 1130620, "end": 1131098}, {"filename": "/assets/textures/MrCube-GDD.jpg", "start": 1131098, "end": 1181183}, {"filename": "/assets/textures/concrete.png", "start": 1181183, "end": 1236567}, {"filename": "/assets/textures/metal.png", "start": 1236567, "end": 1326195}, {"filename": "/assets/textures/texel_checker.png", "start": 1326195, "end": 1419380}], "remote_package_size": 1419380});
+    loadPackage({"files": [{"filename": "/assets/levels/Level-0.lvl", "start": 0, "end": 0}, {"filename": "/assets/levels/Level-1.lvl", "start": 0, "end": 1048}, {"filename": "/assets/levels/Level-2.lvl", "start": 1048, "end": 1227}, {"filename": "/assets/levels/level-0.lvl", "start": 1227, "end": 1227}, {"filename": "/assets/models/column.obj", "start": 1227, "end": 20218}, {"filename": "/assets/models/enemy.obj", "start": 20218, "end": 83225}, {"filename": "/assets/models/groundTile.obj", "start": 83225, "end": 83532}, {"filename": "/assets/models/mr_angry_cube.obj", "start": 83532, "end": 84886}, {"filename": "/assets/models/mr_angry_cube_high_res.obj", "start": 84886, "end": 1215662}, {"filename": "/assets/shaders/base.fs", "start": 1215662, "end": 1216140}, {"filename": "/assets/shaders/base.vs", "start": 1216140, "end": 1216703}, {"filename": "/assets/shaders/custom.fs", "start": 1216703, "end": 1217479}, {"filename": "/assets/shaders/custom.vs", "start": 1217479, "end": 1217852}, {"filename": "/assets/shaders/lighting.fs", "start": 1217852, "end": 1219805}, {"filename": "/assets/shaders/lighting.vs", "start": 1219805, "end": 1220554}, {"filename": "/assets/shaders/raymarching.fs", "start": 1220554, "end": 1233480}, {"filename": "/assets/textures/MrCube-GDD.jpg", "start": 1233480, "end": 1283565}, {"filename": "/assets/textures/concrete.png", "start": 1283565, "end": 3528299}, {"filename": "/assets/textures/menu.png", "start": 3528299, "end": 8697196}, {"filename": "/assets/textures/metal.png", "start": 8697196, "end": 8786824}, {"filename": "/assets/textures/mr-angry-cube-artwork.png", "start": 8786824, "end": 12918288}, {"filename": "/assets/textures/test.png", "start": 12918288, "end": 13192885}, {"filename": "/assets/textures/texel_checker.png", "start": 13192885, "end": 13286070}, {"filename": "/assets/textures/texel_checker_crayon.png", "start": 13286070, "end": 15990757}, {"filename": "/game.ini", "start": 15990757, "end": 15991091}], "remote_package_size": 15991091});
 
   })();
 
-// end include: /tmp/tmpu9pfxzjq.js
-// include: /tmp/tmpd7xg_pak.js
+// end include: /tmp/tmp1jfixpve.js
+// include: /tmp/tmpkhllbosz.js
 
     // All the pre-js content up to here must remain later on, we need to run
     // it.
     if (Module['$ww'] || (typeof ENVIRONMENT_IS_PTHREAD != 'undefined' && ENVIRONMENT_IS_PTHREAD)) Module['preRun'] = [];
     var necessaryPreJSTasks = Module['preRun'].slice();
-  // end include: /tmp/tmpd7xg_pak.js
-// include: /tmp/tmpvcgp4qce.js
+  // end include: /tmp/tmpkhllbosz.js
+// include: /tmp/tmpvdbw2fah.js
 
     if (!Module['preRun']) throw 'Module.preRun should exist because file support used it; did a pre-js delete it?';
     necessaryPreJSTasks.forEach((task) => {
       if (Module['preRun'].indexOf(task) < 0) throw 'All preRun tasks that exist before user pre-js code should remain after; did you replace Module or modify Module.preRun?';
     });
-  // end include: /tmp/tmpvcgp4qce.js
+  // end include: /tmp/tmpvdbw2fah.js
 
 
 var arguments_ = [];
@@ -4000,6 +4001,16 @@ async function createWasm() {
   }
   }
 
+  function ___syscall_fstat64(fd, buf) {
+  try {
+  
+      return SYSCALLS.writeStat(buf, FS.fstat(fd));
+    } catch (e) {
+    if (typeof FS == 'undefined' || !(e.name === 'ErrnoError')) throw e;
+    return -e.errno;
+  }
+  }
+
   
   var stringToUTF8 = (str, outPtr, maxBytesToWrite) => {
       assert(typeof maxBytesToWrite == 'number', 'stringToUTF8(str, outPtr, maxBytesToWrite) is missing the third parameter that specifies the length of the output buffer!');
@@ -4014,6 +4025,66 @@ async function createWasm() {
       if (size < cwdLengthInBytes) return -68;
       stringToUTF8(cwd, buf, size);
       return cwdLengthInBytes;
+    } catch (e) {
+    if (typeof FS == 'undefined' || !(e.name === 'ErrnoError')) throw e;
+    return -e.errno;
+  }
+  }
+
+  
+  function ___syscall_getdents64(fd, dirp, count) {
+  try {
+  
+      var stream = SYSCALLS.getStreamFromFD(fd)
+      stream.getdents ||= FS.readdir(stream.path);
+  
+      var struct_size = 280;
+      var pos = 0;
+      var off = FS.llseek(stream, 0, 1);
+  
+      var startIdx = Math.floor(off / struct_size);
+      var endIdx = Math.min(stream.getdents.length, startIdx + Math.floor(count/struct_size))
+      for (var idx = startIdx; idx < endIdx; idx++) {
+        var id;
+        var type;
+        var name = stream.getdents[idx];
+        if (name === '.') {
+          id = stream.node.id;
+          type = 4; // DT_DIR
+        }
+        else if (name === '..') {
+          var lookup = FS.lookupPath(stream.path, { parent: true });
+          id = lookup.node.id;
+          type = 4; // DT_DIR
+        }
+        else {
+          var child;
+          try {
+            child = FS.lookupNode(stream.node, name);
+          } catch (e) {
+            // If the entry is not a directory, file, or symlink, nodefs
+            // lookupNode will raise EINVAL. Skip these and continue.
+            if (e?.errno === 28) {
+              continue;
+            }
+            throw e;
+          }
+          id = child.id;
+          type = FS.isChrdev(child.mode) ? 2 :  // DT_CHR, character device.
+                 FS.isDir(child.mode) ? 4 :     // DT_DIR, directory.
+                 FS.isLink(child.mode) ? 10 :   // DT_LNK, symbolic link.
+                 8;                             // DT_REG, regular file.
+        }
+        assert(id);
+        HEAP64[((dirp + pos)>>3)] = BigInt(id);
+        HEAP64[(((dirp + pos)+(8))>>3)] = BigInt((idx + 1) * struct_size);
+        HEAP16[(((dirp + pos)+(16))>>1)] = 280;
+        HEAP8[(dirp + pos)+(18)] = type;
+        stringToUTF8(name, dirp + pos + 19, 256);
+        pos += struct_size;
+      }
+      FS.llseek(stream, idx * struct_size, 0);
+      return pos;
     } catch (e) {
     if (typeof FS == 'undefined' || !(e.name === 'ErrnoError')) throw e;
     return -e.errno;
@@ -4116,6 +4187,33 @@ async function createWasm() {
   }
   }
 
+  function ___syscall_lstat64(path, buf) {
+  try {
+  
+      path = SYSCALLS.getStr(path);
+      return SYSCALLS.writeStat(buf, FS.lstat(path));
+    } catch (e) {
+    if (typeof FS == 'undefined' || !(e.name === 'ErrnoError')) throw e;
+    return -e.errno;
+  }
+  }
+
+  function ___syscall_newfstatat(dirfd, path, buf, flags) {
+  try {
+  
+      path = SYSCALLS.getStr(path);
+      var nofollow = flags & 256;
+      var allowEmpty = flags & 4096;
+      flags = flags & (~6400);
+      assert(!flags, `unknown flags in __syscall_newfstatat: ${flags}`);
+      path = SYSCALLS.calculateAt(dirfd, path, allowEmpty);
+      return SYSCALLS.writeStat(buf, nofollow ? FS.lstat(path) : FS.stat(path));
+    } catch (e) {
+    if (typeof FS == 'undefined' || !(e.name === 'ErrnoError')) throw e;
+    return -e.errno;
+  }
+  }
+
   
   function ___syscall_openat(dirfd, path, flags, varargs) {
   SYSCALLS.varargs = varargs;
@@ -4131,8 +4229,73 @@ async function createWasm() {
   }
   }
 
+  function ___syscall_stat64(path, buf) {
+  try {
+  
+      path = SYSCALLS.getStr(path);
+      return SYSCALLS.writeStat(buf, FS.stat(path));
+    } catch (e) {
+    if (typeof FS == 'undefined' || !(e.name === 'ErrnoError')) throw e;
+    return -e.errno;
+  }
+  }
+
   var __abort_js = () =>
       abort('native code called abort()');
+
+  
+  var __tzset_js = (timezone, daylight, std_name, dst_name) => {
+      // TODO: Use (malleable) environment variables instead of system settings.
+      var currentYear = new Date().getFullYear();
+      var winter = new Date(currentYear, 0, 1);
+      var summer = new Date(currentYear, 6, 1);
+      var winterOffset = winter.getTimezoneOffset();
+      var summerOffset = summer.getTimezoneOffset();
+  
+      // Local standard timezone offset. Local standard time is not adjusted for
+      // daylight savings.  This code uses the fact that getTimezoneOffset returns
+      // a greater value during Standard Time versus Daylight Saving Time (DST).
+      // Thus it determines the expected output during Standard Time, and it
+      // compares whether the output of the given date the same (Standard) or less
+      // (DST).
+      var stdTimezoneOffset = Math.max(winterOffset, summerOffset);
+  
+      // timezone is specified as seconds west of UTC ("The external variable
+      // `timezone` shall be set to the difference, in seconds, between
+      // Coordinated Universal Time (UTC) and local standard time."), the same
+      // as returned by stdTimezoneOffset.
+      // See http://pubs.opengroup.org/onlinepubs/009695399/functions/tzset.html
+      HEAPU32[((timezone)>>2)] = stdTimezoneOffset * 60;
+  
+      HEAP32[((daylight)>>2)] = Number(winterOffset != summerOffset);
+  
+      var extractZone = (timezoneOffset) => {
+        // Why inverse sign?
+        // Read here https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset
+        var sign = timezoneOffset >= 0 ? "-" : "+";
+  
+        var absOffset = Math.abs(timezoneOffset)
+        var hours = String(Math.floor(absOffset / 60)).padStart(2, "0");
+        var minutes = String(absOffset % 60).padStart(2, "0");
+  
+        return `UTC${sign}${hours}${minutes}`;
+      }
+  
+      var winterName = extractZone(winterOffset);
+      var summerName = extractZone(summerOffset);
+      assert(winterName);
+      assert(summerName);
+      assert(lengthBytesUTF8(winterName) <= 16, `timezone name truncated to fit in TZNAME_MAX (${winterName})`);
+      assert(lengthBytesUTF8(summerName) <= 16, `timezone name truncated to fit in TZNAME_MAX (${summerName})`);
+      if (summerOffset < winterOffset) {
+        // Northern hemisphere
+        stringToUTF8(winterName, std_name, 17);
+        stringToUTF8(summerName, dst_name, 17);
+      } else {
+        stringToUTF8(winterName, dst_name, 17);
+        stringToUTF8(summerName, std_name, 17);
+      }
+    };
 
   var _emscripten_get_now = () => performance.now();
   
@@ -7928,6 +8091,65 @@ async function createWasm() {
     };
   _emscripten_sleep.isAsync = true;
 
+  var ENV = {
+  };
+  
+  var getExecutableName = () => thisProgram || './this.program';
+  var getEnvStrings = () => {
+      if (!getEnvStrings.strings) {
+        // Default values.
+        // Browser language detection #8751
+        var lang = ((typeof navigator == 'object' && navigator.languages && navigator.languages[0]) || 'C').replace('-', '_') + '.UTF-8';
+        var env = {
+          'USER': 'web_user',
+          'LOGNAME': 'web_user',
+          'PATH': '/',
+          'PWD': '/',
+          'HOME': '/home/web_user',
+          'LANG': lang,
+          '_': getExecutableName()
+        };
+        // Apply the user-provided values, if any.
+        for (var x in ENV) {
+          // x is a key in ENV; if ENV[x] is undefined, that means it was
+          // explicitly set to be so. We allow user code to do that to
+          // force variables with default values to remain unset.
+          if (ENV[x] === undefined) delete env[x];
+          else env[x] = ENV[x];
+        }
+        var strings = [];
+        for (var x in env) {
+          strings.push(`${x}=${env[x]}`);
+        }
+        getEnvStrings.strings = strings;
+      }
+      return getEnvStrings.strings;
+    };
+  
+  var _environ_get = (__environ, environ_buf) => {
+      var bufSize = 0;
+      var envp = 0;
+      for (var string of getEnvStrings()) {
+        var ptr = environ_buf + bufSize;
+        HEAPU32[(((__environ)+(envp))>>2)] = ptr;
+        bufSize += stringToUTF8(string, ptr, Infinity) + 1;
+        envp += 4;
+      }
+      return 0;
+    };
+
+  
+  var _environ_sizes_get = (penviron_count, penviron_buf_size) => {
+      var strings = getEnvStrings();
+      HEAPU32[((penviron_count)>>2)] = strings.length;
+      var bufSize = 0;
+      for (var string of strings) {
+        bufSize += lengthBytesUTF8(string) + 1;
+      }
+      HEAPU32[((penviron_buf_size)>>2)] = bufSize;
+      return 0;
+    };
+
 
   function _fd_close(fd) {
   try {
@@ -8025,7 +8247,6 @@ async function createWasm() {
     return e.errno;
   }
   }
-
 
 
 
@@ -10022,7 +10243,6 @@ if (Module['wasmBinary']) wasmBinary = Module['wasmBinary'];
   'writeSockaddr',
   'emscriptenLog',
   'runMainThreadEmAsm',
-  'getExecutableName',
   'listenOnce',
   'autoResumeAudioContext',
   'dynCallLegacy',
@@ -10093,7 +10313,6 @@ if (Module['wasmBinary']) wasmBinary = Module['wasmBinary'];
   'jsStackTrace',
   'getCallstack',
   'convertPCtoSourceLocation',
-  'getEnvStrings',
   'wasiRightsToMuslOFlags',
   'wasiOFlagsToMuslOFlags',
   'setImmediateWrapped',
@@ -10171,6 +10390,7 @@ missingLibrarySymbols.forEach(missingLibrarySymbol)
   'runEmAsmFunction',
   'jstoi_q',
   'jstoi_s',
+  'getExecutableName',
   'handleException',
   'keepRuntimeAlive',
   'runtimeKeepalivePush',
@@ -10224,6 +10444,7 @@ missingLibrarySymbols.forEach(missingLibrarySymbol)
   'registerGamepadEventCallback',
   'UNWIND_CACHE',
   'ExitStatus',
+  'getEnvStrings',
   'checkWasiClock',
   'doReadv',
   'doWritev',
@@ -10310,49 +10531,49 @@ function checkIncomingModuleAPI() {
   ignoredModuleProp('fetchSettings');
 }
 var ASM_CONSTS = {
-  111800: () => { if (document.fullscreenElement) return 1; },  
- 111846: () => { return Module.canvas.width; },  
- 111878: () => { return parseInt(Module.canvas.style.width); },  
- 111926: () => { document.exitFullscreen(); },  
- 111953: () => { setTimeout(function() { Module.requestFullscreen(false, false); }, 100); },  
- 112026: () => { if (document.fullscreenElement) return 1; },  
- 112072: () => { return Module.canvas.width; },  
- 112104: () => { return screen.width; },  
- 112129: () => { document.exitFullscreen(); },  
- 112156: () => { setTimeout(function() { Module.requestFullscreen(false, true); setTimeout(function() { canvas.style.width="unset"; }, 100); }, 100); },  
- 112289: () => { return window.innerWidth; },  
- 112315: () => { return window.innerHeight; },  
- 112342: () => { if (document.fullscreenElement) return 1; },  
- 112388: () => { return Module.canvas.width; },  
- 112420: () => { return parseInt(Module.canvas.style.width); },  
- 112468: () => { if (document.fullscreenElement) return 1; },  
- 112514: () => { return Module.canvas.width; },  
- 112546: () => { return screen.width; },  
- 112571: () => { return window.innerWidth; },  
- 112597: () => { return window.innerHeight; },  
- 112624: () => { if (document.fullscreenElement) return 1; },  
- 112670: () => { return Module.canvas.width; },  
- 112702: () => { return screen.width; },  
- 112727: () => { document.exitFullscreen(); },  
- 112754: () => { if (document.fullscreenElement) return 1; },  
- 112800: () => { return Module.canvas.width; },  
- 112832: () => { return parseInt(Module.canvas.style.width); },  
- 112880: () => { document.exitFullscreen(); },  
- 112907: ($0) => { Module.canvas.style.opacity = $0; },  
- 112945: () => { return screen.width; },  
- 112970: () => { return screen.height; },  
- 112996: () => { return window.screenX; },  
- 113023: () => { return window.screenY; },  
- 113050: () => { return window.devicePixelRatio; },  
- 113086: ($0) => { navigator.clipboard.writeText(UTF8ToString($0)); },  
- 113139: ($0) => { Module.canvas.style.cursor = UTF8ToString($0); },  
- 113190: () => { Module.canvas.style.cursor = 'none'; },  
- 113227: ($0, $1, $2, $3) => { try { navigator.getGamepads()[$0].vibrationActuator.playEffect('dual-rumble', { startDelay: 0, duration: $3, weakMagnitude: $1, strongMagnitude: $2 }); } catch (e) { try { navigator.getGamepads()[$0].hapticActuators[0].pulse($2, $3); } catch (e) { } } },  
- 113483: ($0) => { Module.canvas.style.cursor = UTF8ToString($0); },  
- 113534: () => { if (document.fullscreenElement) return 1; },  
- 113580: () => { return window.innerWidth; },  
- 113606: () => { return window.innerHeight; },  
- 113633: () => { if (document.pointerLockElement) return 1; }
+  137880: () => { if (document.fullscreenElement) return 1; },  
+ 137926: () => { return Module.canvas.width; },  
+ 137958: () => { return parseInt(Module.canvas.style.width); },  
+ 138006: () => { document.exitFullscreen(); },  
+ 138033: () => { setTimeout(function() { Module.requestFullscreen(false, false); }, 100); },  
+ 138106: () => { if (document.fullscreenElement) return 1; },  
+ 138152: () => { return Module.canvas.width; },  
+ 138184: () => { return screen.width; },  
+ 138209: () => { document.exitFullscreen(); },  
+ 138236: () => { setTimeout(function() { Module.requestFullscreen(false, true); setTimeout(function() { canvas.style.width="unset"; }, 100); }, 100); },  
+ 138369: () => { return window.innerWidth; },  
+ 138395: () => { return window.innerHeight; },  
+ 138422: () => { if (document.fullscreenElement) return 1; },  
+ 138468: () => { return Module.canvas.width; },  
+ 138500: () => { return parseInt(Module.canvas.style.width); },  
+ 138548: () => { if (document.fullscreenElement) return 1; },  
+ 138594: () => { return Module.canvas.width; },  
+ 138626: () => { return screen.width; },  
+ 138651: () => { return window.innerWidth; },  
+ 138677: () => { return window.innerHeight; },  
+ 138704: () => { if (document.fullscreenElement) return 1; },  
+ 138750: () => { return Module.canvas.width; },  
+ 138782: () => { return screen.width; },  
+ 138807: () => { document.exitFullscreen(); },  
+ 138834: () => { if (document.fullscreenElement) return 1; },  
+ 138880: () => { return Module.canvas.width; },  
+ 138912: () => { return parseInt(Module.canvas.style.width); },  
+ 138960: () => { document.exitFullscreen(); },  
+ 138987: ($0) => { Module.canvas.style.opacity = $0; },  
+ 139025: () => { return screen.width; },  
+ 139050: () => { return screen.height; },  
+ 139076: () => { return window.screenX; },  
+ 139103: () => { return window.screenY; },  
+ 139130: () => { return window.devicePixelRatio; },  
+ 139166: ($0) => { navigator.clipboard.writeText(UTF8ToString($0)); },  
+ 139219: ($0) => { Module.canvas.style.cursor = UTF8ToString($0); },  
+ 139270: () => { Module.canvas.style.cursor = 'none'; },  
+ 139307: ($0, $1, $2, $3) => { try { navigator.getGamepads()[$0].vibrationActuator.playEffect('dual-rumble', { startDelay: 0, duration: $3, weakMagnitude: $1, strongMagnitude: $2 }); } catch (e) { try { navigator.getGamepads()[$0].hapticActuators[0].pulse($2, $3); } catch (e) { } } },  
+ 139563: ($0) => { Module.canvas.style.cursor = UTF8ToString($0); },  
+ 139614: () => { if (document.fullscreenElement) return 1; },  
+ 139660: () => { return window.innerWidth; },  
+ 139686: () => { return window.innerHeight; },  
+ 139713: () => { if (document.pointerLockElement) return 1; }
 };
 function GetCanvasIdJs() { var canvasId = "#" + Module.canvas.id; var lengthBytes = lengthBytesUTF8(canvasId) + 1; var stringOnWasmHeap = _malloc(lengthBytes); stringToUTF8(canvasId, stringOnWasmHeap, lengthBytes); return stringOnWasmHeap; }
 var wasmImports = {
@@ -10369,13 +10590,25 @@ var wasmImports = {
   /** @export */
   __syscall_fcntl64: ___syscall_fcntl64,
   /** @export */
+  __syscall_fstat64: ___syscall_fstat64,
+  /** @export */
   __syscall_getcwd: ___syscall_getcwd,
+  /** @export */
+  __syscall_getdents64: ___syscall_getdents64,
   /** @export */
   __syscall_ioctl: ___syscall_ioctl,
   /** @export */
+  __syscall_lstat64: ___syscall_lstat64,
+  /** @export */
+  __syscall_newfstatat: ___syscall_newfstatat,
+  /** @export */
   __syscall_openat: ___syscall_openat,
   /** @export */
+  __syscall_stat64: ___syscall_stat64,
+  /** @export */
   _abort_js: __abort_js,
+  /** @export */
+  _tzset_js: __tzset_js,
   /** @export */
   clock_time_get: _clock_time_get,
   /** @export */
@@ -10759,6 +10992,10 @@ var wasmImports = {
   /** @export */
   emscripten_sleep: _emscripten_sleep,
   /** @export */
+  environ_get: _environ_get,
+  /** @export */
+  environ_sizes_get: _environ_sizes_get,
+  /** @export */
   exit: _exit,
   /** @export */
   fd_close: _fd_close,
@@ -10800,8 +11037,6 @@ var wasmImports = {
   glCreateShader: _glCreateShader,
   /** @export */
   glCullFace: _glCullFace,
-  /** @export */
-  glDeleteBuffers: _glDeleteBuffers,
   /** @export */
   glDeleteProgram: _glDeleteProgram,
   /** @export */
@@ -10944,9 +11179,9 @@ var wasmImports = {
 var wasmExports;
 createWasm();
 var ___wasm_call_ctors = createExportWrapper('__wasm_call_ctors', 0);
-var _main = Module['_main'] = createExportWrapper('main', 2);
-var _malloc = createExportWrapper('malloc', 1);
 var _free = createExportWrapper('free', 1);
+var _malloc = createExportWrapper('malloc', 1);
+var _main = Module['_main'] = createExportWrapper('main', 2);
 var _strerror = createExportWrapper('strerror', 1);
 var _fflush = createExportWrapper('fflush', 1);
 var _emscripten_stack_get_end = () => (_emscripten_stack_get_end = wasmExports['emscripten_stack_get_end'])();
@@ -10960,8 +11195,6 @@ var dynCall_ii = Module['dynCall_ii'] = createExportWrapper('dynCall_ii', 2);
 var dynCall_vi = Module['dynCall_vi'] = createExportWrapper('dynCall_vi', 2);
 var dynCall_vif = Module['dynCall_vif'] = createExportWrapper('dynCall_vif', 3);
 var dynCall_vii = Module['dynCall_vii'] = createExportWrapper('dynCall_vii', 3);
-var dynCall_viifii = Module['dynCall_viifii'] = createExportWrapper('dynCall_viifii', 6);
-var dynCall_iii = Module['dynCall_iii'] = createExportWrapper('dynCall_iii', 3);
 var dynCall_v = Module['dynCall_v'] = createExportWrapper('dynCall_v', 1);
 var dynCall_viii = Module['dynCall_viii'] = createExportWrapper('dynCall_viii', 4);
 var dynCall_viff = Module['dynCall_viff'] = createExportWrapper('dynCall_viff', 4);
@@ -10969,6 +11202,7 @@ var dynCall_viiiii = Module['dynCall_viiiii'] = createExportWrapper('dynCall_vii
 var dynCall_viiii = Module['dynCall_viiii'] = createExportWrapper('dynCall_viiii', 5);
 var dynCall_vidd = Module['dynCall_vidd'] = createExportWrapper('dynCall_vidd', 4);
 var dynCall_iiii = Module['dynCall_iiii'] = createExportWrapper('dynCall_iiii', 4);
+var dynCall_iii = Module['dynCall_iii'] = createExportWrapper('dynCall_iii', 3);
 var dynCall_iiiiii = Module['dynCall_iiiiii'] = createExportWrapper('dynCall_iiiiii', 6);
 var dynCall_viiiiii = Module['dynCall_viiiiii'] = createExportWrapper('dynCall_viiiiii', 7);
 var dynCall_vffff = Module['dynCall_vffff'] = createExportWrapper('dynCall_vffff', 5);
@@ -10985,6 +11219,15 @@ var dynCall_viffff = Module['dynCall_viffff'] = createExportWrapper('dynCall_vif
 var dynCall_vfff = Module['dynCall_vfff'] = createExportWrapper('dynCall_vfff', 4);
 var dynCall_jiji = Module['dynCall_jiji'] = createExportWrapper('dynCall_jiji', 4);
 var dynCall_iidiiii = Module['dynCall_iidiiii'] = createExportWrapper('dynCall_iidiiii', 7);
+var dynCall_viijii = Module['dynCall_viijii'] = createExportWrapper('dynCall_viijii', 6);
+var dynCall_iiiii = Module['dynCall_iiiii'] = createExportWrapper('dynCall_iiiii', 5);
+var dynCall_iiiiiiiii = Module['dynCall_iiiiiiiii'] = createExportWrapper('dynCall_iiiiiiiii', 9);
+var dynCall_iiiiiii = Module['dynCall_iiiiiii'] = createExportWrapper('dynCall_iiiiiii', 7);
+var dynCall_iiiiij = Module['dynCall_iiiiij'] = createExportWrapper('dynCall_iiiiij', 6);
+var dynCall_iiiiid = Module['dynCall_iiiiid'] = createExportWrapper('dynCall_iiiiid', 6);
+var dynCall_iiiiijj = Module['dynCall_iiiiijj'] = createExportWrapper('dynCall_iiiiijj', 7);
+var dynCall_iiiiiiii = Module['dynCall_iiiiiiii'] = createExportWrapper('dynCall_iiiiiiii', 8);
+var dynCall_iiiiiijj = Module['dynCall_iiiiiijj'] = createExportWrapper('dynCall_iiiiiijj', 8);
 var _asyncify_start_unwind = createExportWrapper('asyncify_start_unwind', 1);
 var _asyncify_stop_unwind = createExportWrapper('asyncify_stop_unwind', 0);
 var _asyncify_start_rewind = createExportWrapper('asyncify_start_rewind', 1);
