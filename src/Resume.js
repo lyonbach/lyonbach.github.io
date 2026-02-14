@@ -127,10 +127,10 @@ function LeftSide() {
                         <span class="icon"></span>
                         <span class="text">linkedin.com/in/bahadir-arslan-07687161</span>
                     </li>
-                    <li>
-                        <span class="icon"></span>
-                        <span class="text">Koerschstrasse 17 / 70599 Stuttgart</span>
-                    </li>
+                    {/* <li> */}
+                        {/* <span class="icon"></span> */}
+                        {/* <span class="text">Koerschstrasse 17 / 70599 Stuttgart</span> */}
+                    {/* </li> */}
                 </div>
             </div>
         )
@@ -176,8 +176,8 @@ function RightSide() {
                 <div class="objective">
                     <h2>Objective</h2><br />
                     <span>
-                        Python / C++ developer with extensive work experience in computer graphics production pipeline.
-                        Looking for opportunities to get more familiar with AI / machine learning as well as automation in manufacturing.
+                        Python/C++ developer with extensive experience building computer graphics production pipelines, 
+                        seeking senior engineering roles to drive AI/ML integration and manufacturing automation initiatives.
                     </span>
                 </div>
             </div>
@@ -195,32 +195,46 @@ function RightSide() {
                     <h3 class="uls">Pipeline Developer (Sep 2017 - Present)</h3>
                     <span>
                         <li>
-                            <span>Developed, tested and documented in-house applications using mostly Python and C++. Used various libraries such as PySide/Qt.</span>
-                        </li>
-                        <li>
-                            <span>Collaborated with cross-functional teams to design and implement new
-                                  features and functionality for the company's Unreal Engine and AWS based products.</span>
-                        </li>
-                        <li>
-                            <span>Provided technical support for digital artists in custom tool creation and
-                                automation of batch processes in Maya (Vray), Blender and Unreal Engine.</span>
-                        </li>
-                        <li>
-                            <span> Created Python modules to automate mediapackages for configurator tools / pipelines of various car companies.
+                            <span>
+                                Designed, developed, tested, and documented multiple in-house applications in Python and C++, 
+                                using libraries such as PySide/Qt to support production workflows.
                             </span>
                         </li>
                         <li>
-                            <span> Developed tools for batch image comparison and editing using OpenCV.</span>
+                            <span>
+                                Collaborated with cross-functional teams to design and implement new features for Unreal 
+                                Engine- and AWS-based products, improving stability and usability for internal users.
+                            </span>
                         </li>
                         <li>
-                            <span>Worked in conversion of traditional VRay rendering pipeline to Unreal Engine
-                                for more than 50% performance gains. </span>
+                            <span>
+                                Built custom tools and automated batch processes for digital artists in Maya (VRay), 
+                                Blender, and Unreal Engine, significantly reducing manual effort in daily tasks.
+                            </span>
                         </li>
                         <li>
-                            <span> Developed websites/tools based on react frontend and python backend and handled testing and documentation.</span>
+                            <span>
+                                Created Python modules to automate mediapackage generation for configurator pipelines 
+                                used by various car companies, streamlining content delivery.
+                            </span>
                         </li>
                         <li>
-                            <span> Worked on bugfixing and upgrading of the company's already existing tools and libraries in various programming and scripting languages such as C# and Mel Scripting.</span>
+                            <span>
+                                Developed OpenCV-based batch image comparison and editing tools, as well as React 
+                                frontend/Python backend web applications, and took ownership of their testing and documentation.
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                Reengineered the traditional VRay rendering pipeline to Unreal Engine, achieving more than 
+                                50% performance gains in rendering workflows.
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                Maintained and enhanced existing tools and libraries, fixing bugs and adding features across 
+                                multiple languages, including C# and MEL scripting.
+                            </span>
                         </li>
                     </span>
                 </span>
@@ -228,63 +242,32 @@ function RightSide() {
         );
     }
 
-    function AdmosStudio() {
+function PreviousRelevantWorkExperience() {
+    return (
+        <div class="experience">
+            <h2>Previous Relevant Work Experience</h2>
 
-        return (
-            <div class="experience-2">
-                <h2>Admo's Studio (Start-Up)</h2>
-                <h3>Ankara / Turkey</h3>
-                <span>
-                    <h3 class="uls">Technical Artist (Sep 2014 - Aug 2015)</h3>
-                    <span>
-                        <li>
-                            <span>Supported in character modeling, texturing,
-                                rigging, animation, and sound design for mobile game development.</span>
-                        </li>
-                        <li>
-                            <span>Worked with Unreal Engine for architectural visualization projects.</span>
-                        </li>
-                        <li>
-                            <span>Pulished mobile game: KaFa (2015).</span>
-                        </li>
-                    </span>
-                </span>
+            <div class="experience-item">
+                <h3>Technical Director (Jun 2011 – Sep 2014)</h3>
+                <ul>
+                    <li>Led an architectural visualization team, collaborated with architects, and developed in-house automation tools using Python and 3ds Max scripting.</li>
+                    <li>Contributed to research and development of a holographic display device.</li>
+                    <li>Handled modeling, animation, post-production, and advertising tasks.</li>
+                </ul>
             </div>
-        );
-    }
 
-    function SanalGerceklikTeknolojileri() {
-
-        return (
-            <div class="experience-1">
-                <h2>Sanal Gerceklik Teknolojileri (Start-Up)</h2>
-                <h3 class="uls">Ankara / Turkey</h3>
-                <span>
-                    <h3>Technical Director (Jun 2011 - Sep 2014)</h3>
-                    <span>
-                        <li>
-                            <span>Led an architectural visualization team,
-                                supported in interpretation and understanding of architectural projects,
-                                scheduled meetings with architects.</span>
-                        </li>
-                        <li>
-                            <span>Provided technical support for the research and development of a holographic
-                                display
-                                device for the start-up company.</span>
-                        </li>
-                        <li>
-                            <span>Managed and produced in-house tools for automating the rendering pipeline,
-                                using Python and 3ds Max scripting language to increase productivity.</span>
-                        </li>
-                        <li>
-                            <span>Took part in modeling and animation, as well as post-production and
-                                advertising.</span>
-                        </li>
-                    </span>
-                </span>
+            <div class="experience-item">
+                <h3>Technical Artist (Sep 2014 – Aug 2015)</h3>
+                <ul>
+                    <li>Supported mobile game development with character modeling, texturing, rigging, animation, and sound design.</li>
+                    <li>Worked with Unreal Engine on architectural visualization projects.</li>
+                    <li>Contributed to the release of a mobile game in 2015.</li>
+                </ul>
             </div>
-        );
-    }
+        </div>
+    );
+}
+
 
     const style = {};
 
@@ -305,10 +288,7 @@ function RightSide() {
                     <EderGmbH />
                 </Grid>
                 <Grid item={3}>
-                    <AdmosStudio />
-                </Grid>
-                <Grid item={3}>
-                    <SanalGerceklikTeknolojileri />
+                    <PreviousRelevantWorkExperience />
                 </Grid>
             </Grid>
         </div>
