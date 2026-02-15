@@ -55,14 +55,15 @@ function LeftSide() {
                 <li>JavaScript</li>
                 <li>Mel Scripting</li>
                 <li>C#</li>
-                <li>Java</li>
+                {/* <li>Java</li> */}
                 <h4 class="subtitle">Libraries/Frameworks/Tools</h4>
-                <li>Qt / PySide</li>
+                <li>Qt/PySide</li>
                 <li>OpenCV </li>
                 <li>Numpy/Pandas/PyTorch </li>
                 <li>Maya Python Library</li>
                 <li>Unreal Engine/Maya/Blender</li>
-                <li>React/Flask/Django</li>
+                <li>React</li>
+                <li>FastAPI/Flask/Django</li>
                 <li>Git/Azure DevOps</li>
             </div>
         )
@@ -117,20 +118,13 @@ function LeftSide() {
                     <h3 class="title">Contact</h3>
                     <li>
                         <span class="icon"></span>
-                        <span class="text">+49 157 3626 86 30</span>
-                    </li>
-                    <li>
-                        <span class="icon"></span>
+                        <span>+49 157 3626 86 30 / </span>
                         <span class="text">arslan.bah@gmail.com</span>
                     </li>
                     <li>
                         <span class="icon"></span>
                         <span class="text">linkedin.com/in/bahadir-arslan-07687161</span>
                     </li>
-                    {/* <li> */}
-                        {/* <span class="icon"></span> */}
-                        {/* <span class="text">Koerschstrasse 17 / 70599 Stuttgart</span> */}
-                    {/* </li> */}
                 </div>
             </div>
         )
@@ -174,15 +168,25 @@ function RightSide() {
         return (
             <div class="profile-container">
                 <div class="objective">
-                    <h2>Objective</h2><br />
                     <span>
-                        Python/C++ developer with extensive experience building computer graphics production pipelines, 
+                        Python/C++ developer with extensive experience building computer graphics production pipelines,
                         seeking senior engineering roles to drive AI/ML integration and manufacturing automation initiatives.
                     </span>
+                    <br/>
                 </div>
             </div>
         );
 
+    }
+
+    function Experience() {
+        return (
+            <div class="profile-container">
+                <div class="experience">
+                    <h2>Experience</h2><br />
+                </div>
+            </div>
+        );
     }
 
     function EderGmbH() {
@@ -196,43 +200,43 @@ function RightSide() {
                     <span>
                         <li>
                             <span>
-                                Designed, developed, tested, and documented multiple in-house applications in Python and C++, 
+                                Designed, developed, tested, and documented multiple in-house applications in Python and C++,
                                 using libraries such as PySide/Qt to support production workflows.
                             </span>
                         </li>
                         <li>
                             <span>
-                                Collaborated with cross-functional teams to design and implement new features for Unreal 
+                                Collaborated with cross-functional teams to design and implement new features for Unreal
                                 Engine- and AWS-based products, improving stability and usability for internal users.
                             </span>
                         </li>
                         <li>
                             <span>
-                                Built custom tools and automated batch processes for digital artists in Maya (VRay), 
+                                Built custom tools and automated batch processes for digital artists in Maya (VRay),
                                 Blender, and Unreal Engine, significantly reducing manual effort in daily tasks.
                             </span>
                         </li>
                         <li>
                             <span>
-                                Created Python modules to automate mediapackage generation for configurator pipelines 
+                                Created Python modules to automate mediapackage generation for configurator pipelines
                                 used by various car companies, streamlining content delivery.
                             </span>
                         </li>
                         <li>
                             <span>
-                                Developed OpenCV-based batch image comparison and editing tools, as well as React 
+                                Developed OpenCV-based batch image comparison and editing tools, as well as React
                                 frontend/Python backend web applications, and took ownership of their testing and documentation.
                             </span>
                         </li>
                         <li>
                             <span>
-                                Reengineered the traditional VRay rendering pipeline to Unreal Engine, achieving more than 
+                                Reengineered the traditional VRay rendering pipeline to Unreal Engine, achieving more than
                                 50% performance gains in rendering workflows.
                             </span>
                         </li>
                         <li>
                             <span>
-                                Maintained and enhanced existing tools and libraries, fixing bugs and adding features across 
+                                Maintained and enhanced existing tools and libraries, fixing bugs and adding features across
                                 multiple languages, including C# and MEL scripting.
                             </span>
                         </li>
@@ -276,13 +280,6 @@ function PreviousRelevantWorkExperience() {
             <Grid container spacing={2}>
                 <Grid item={1}>
                     <Objective />
-                </Grid>
-                <Grid item={1}>
-                </Grid>
-                <Grid item={1}>
-                    <div>
-                        <h2>Experience</h2>
-                    </div>
                 </Grid>
                 <Grid item={3}>
                     <EderGmbH />

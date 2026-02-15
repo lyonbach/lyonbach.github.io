@@ -22,7 +22,7 @@ function App() {
             const imgData = canvas.toDataURL('image/png');
             const pdf = new jsPDF();
             pdf.addImage(imgData, 'PNG', 0, 0, width, height);
-            pdf.save("Resume - Bahadir Arslan.pdf");
+            pdf.save("Resume - Bahadır Arslan.pdf");
         });
 
     }
