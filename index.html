@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation Sprite Viewer</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        #animation-container {
+            margin-top: 20px;
+            width: 100px;
+            height: 100px;
+            border: 2px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-size: 300% 300%;
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Animation Viewer</h1>
+        <div class="controls">
+            <input type="file" id="upload" accept="image/*">
+        </div>
+        <div id="animation-container">
+            Upload a 3x3 sprite sheet
+        </div>
+    </div>
+
+    <script>
+        const upload = document.getElementById('upload');
+        const container = document.getElementById('animation-container');
+        let frame = 0;
+        let animationInterval = null;
+
+        upload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => {
+                    container.innerText = '';
+                    container.style.backgroundImage = `url(${event.target.result})`;
+                    container.style.backgroundRepeat = 'no-repeat';
+                    
+                    // Assume 3x3 grid
+                    const frameWidth = 100 / 3; 
+                    const frameHeight = 100 / 3;
+                    
+                    // Correcting for actual CSS percentages
+                    // For a 3x3 grid, background-size should be 300% 300%
+                    container.style.backgroundSize = '300% 300%';
+                    container.style.width = '100px';
+                    container.style.height = '100px';
+
+                    if (animationInterval) clearInterval(animationInterval);
+                    
+                    animationInterval = setInterval(() => {
+                        const row = Math.floor(frame / 3);
+                        const col = frame % 3;
+                        
+                        const posX = (col * -100) + '%';
+                        const posY = (row * -100) + '%';
+                        
+                        container.style.backgroundPosition = `${posX} ${posY}`;
+                        frame = (frame + 1) % 9;
+                    }, 150);
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>
