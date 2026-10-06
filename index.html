@@ -75,17 +75,16 @@
                     // Correcting for actual CSS percentages
                     // For a 3x3 grid, background-size should be 300% 300%
                     container.style.backgroundSize = '300% 300%';
-                    container.style.width = '100px';
-                    container.style.height = '100px';
+                    container.style.width = '600px';
+                    container.style.height = '600px';
 
                     if (animationInterval) clearInterval(animationInterval);
-                    
                     animationInterval = setInterval(() => {
                         const row = Math.floor(frame / 3);
                         const col = frame % 3;
                         
-                        const posX = (col * -100) + '%';
-                        const posY = (row * -100) + '%';
+                        const posX = `${col * 50}%`;
+                        const posY = `${row * 50}%`;
                         
                         container.style.backgroundPosition = `${posX} ${posY}`;
                         frame = (frame + 1) % 9;
